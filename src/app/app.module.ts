@@ -11,7 +11,12 @@ import { LoginComponent } from './login/login.component';
 import { ListPlayersComponent } from './list-players/list-players.component';
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent, LoginComponent, ListPlayersComponent],
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    ListPlayersComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
