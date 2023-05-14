@@ -1,0 +1,25 @@
+<button (click)="loadPlayers()">Load Players</button>
+
+<div *ngIf="error">
+  <h2>Error:</h2>
+  <p>{{ error }}</p>
+</div>
+
+<table *ngIf="players.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Cellphone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of players">
+      <td>{{ player.id }}</td>
+      <td>{{ player.name }}</td>
+      <td>{{ player.email }}</td>
+      <td>{{ player.cellphone }}</td>
+    </tr>
+  </tbody>
+</table>
