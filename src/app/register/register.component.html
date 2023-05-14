@@ -1,0 +1,56 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" type="text" formControlName="name" />
+    <div
+      *ngIf="registerForm.controls['name'].touched && registerForm.controls['name'].errors?.['required']"
+    >
+      Name is required
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+    <div
+      *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors?.['required']"
+    >
+      Email is required
+    </div>
+    <div
+      *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors?.['email']"
+    >
+      Email format is invalid
+    </div>
+  </div>
+
+  <div>
+    <label for="cellphone">Cellphone:</label>
+    <input id="cellphone" type="text" formControlName="cellphone" />
+    <div
+      *ngIf="registerForm.controls['cellphone'].touched && registerForm.controls['cellphone'].errors?.['required']"
+    >
+      Cellphone is required
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" />
+    <div
+      *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.['required']"
+    >
+      Password is required
+    </div>
+    <div
+      *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.['minlength']"
+    >
+      Password must be at least 6 characters long
+    </div>
+  </div>
+
+  <div *ngIf="successMessage">{{ successMessage }}</div>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <button type="submit" [disabled]="registerForm.invalid">Submit</button>
+</form>
