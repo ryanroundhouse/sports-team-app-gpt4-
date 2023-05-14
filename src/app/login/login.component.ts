@@ -18,6 +18,7 @@ export class LoginComponent {
     this.playerService.login(this.email, this.password).subscribe(
       (response) => {
         this.token = response.token;
+        this.error = null;
         sessionStorage.setItem('token', this.token);
       },
       (error) => {

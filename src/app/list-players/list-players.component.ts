@@ -22,6 +22,7 @@ export class ListPlayersComponent {
     this.playerService.getAll(token).subscribe(
       (players) => {
         this.players = players;
+        this.error = null;
       },
       (error) => {
         this.error = error.message;
