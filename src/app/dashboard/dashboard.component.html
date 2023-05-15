@@ -1,0 +1,19 @@
+<h2>Your Teams</h2>
+<app-create-team (teamCreated)="onTeamCreated()"></app-create-team>
+<table *ngIf="teams.length > 0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let team of teams">
+      <td>{{ team.name }}</td>
+      <td>
+        <a [routerLink]="['/team', team.id]">View Team</a>
+        <button (click)="deleteTeam(team.id)">Delete Team</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

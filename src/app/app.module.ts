@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ListPlayersComponent } from './list-players/list-players.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreateTeamComponent } from './create-team/create-team.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { ListPlayersComponent } from './list-players/list-players.component';
     RegisterComponent,
     LoginComponent,
     ListPlayersComponent,
+    DashboardComponent,
+    CreateTeamComponent,
   ],
   imports: [
     BrowserModule,

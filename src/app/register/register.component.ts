@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Player, PlayerService } from '../services/player.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,14 @@ export class RegisterComponent {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService, private router: Router) {}
+
+  ngOnInit() {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   onSubmit(): void {
     console.log(`submit`);
@@ -39,6 +47,7 @@ export class RegisterComponent {
           this.errorMessage = null;
           this.registerForm.reset();
           console.log(`success`);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           this.errorMessage =
