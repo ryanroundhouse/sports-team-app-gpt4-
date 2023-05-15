@@ -1,0 +1,44 @@
+<!-- team-dashboard.component.html -->
+<h1>{{ team?.name }}</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Cellphone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of players">
+      <td>{{ player.id }}</td>
+      <td>{{ player.name }}</td>
+      <td>{{ player.email }}</td>
+      <td>{{ player.cellphone }}</td>
+      <td>
+        <!-- Update action buttons based on your requirements -->
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Add New Member</h2>
+<form
+  #newMemberForm="ngForm"
+  (ngSubmit)="
+    createTeamMembership(
+      newMemberForm.value.playerId,
+      newMemberForm.value.isCaptain
+    )
+  "
+>
+  <label for="playerId">Player ID:</label>
+  <input type="number" id="playerId" name="playerId" ngModel required />
+
+  <label for="isCaptain">Is Captain:</label>
+  <input type="checkbox" id="isCaptain" name="isCaptain" ngModel />
+
+  <button type="submit">Add Member</button>
+</form>
