@@ -1,0 +1,26 @@
+<div class="list-team-games">
+    <h2>Team Games</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Location</th>
+          <th>Opposing Team</th>
+          <th>Time</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of games">
+          <td>{{game.location}}</td>
+          <td>{{game.opposingTeam}}</td>
+          <td>{{game.time | date:'yyyy-MM-ddTHH:mm:ss'}}</td>
+          <td>{{game.notes}}</td>
+          <td>
+            <button (click)="deleteGame(game.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

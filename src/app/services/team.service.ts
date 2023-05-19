@@ -30,8 +30,9 @@ export class TeamService {
     return this.http.get<Team[]>(this.baseUrl, { headers });
   }
 
-  getTeamById(id: number): Observable<Team> {
-    return this.http.get<Team>(`${this.baseUrl}/${id}`);
+  getTeamById(id: number, token: string): Observable<Team> {
+    const headers = this.getAuthHeader(token);
+    return this.http.get<Team>(`${this.baseUrl}/${id}`, { headers });
   }
 
   updateTeam(token: string, id: number, name: string): Observable<Team> {

@@ -36,7 +36,10 @@ export class TeamDashboardComponent implements OnInit {
   }
 
   getTeam(token: string, id: number): void {
-    this.teamService.getTeamById(id).subscribe((team) => (this.team = team));
+    this.token = sessionStorage.getItem('token');
+    if (token){
+      this.teamService.getTeamById(id, token).subscribe((team) => (this.team = team));
+    }
   }
 
   getTeamMemberships(token: string, id: number): void {

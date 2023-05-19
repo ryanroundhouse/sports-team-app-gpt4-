@@ -1,5 +1,4 @@
-<h2>Your Teams</h2>
-<app-create-team (teamCreated)="onTeamCreated()"></app-create-team>
+<h2>Team Management</h2>
 <table *ngIf="teams.length > 0">
   <thead>
     <tr>
@@ -17,3 +16,4 @@
     </tr>
   </tbody>
 </table>
+<app-create-team (teamCreated)="onTeamCreated()"></app-create-team>

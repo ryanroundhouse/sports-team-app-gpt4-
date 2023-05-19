@@ -12,6 +12,8 @@ import { ListPlayersComponent } from './list-players/list-players.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamDashboardComponent } from './team-dashboard/team-dashboard.component';
+import { CreateGameComponent } from './create-game/create-game.component';
+import { ListTeamGamesComponent } from './list-team-games/list-team-games.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { TeamDashboardComponent } from './team-dashboard/team-dashboard.componen
     DashboardComponent,
     CreateTeamComponent,
     TeamDashboardComponent,
+    CreateGameComponent,
+    ListTeamGamesComponent,
   ],
   imports: [
     BrowserModule,
