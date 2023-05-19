@@ -17,3 +17,9 @@
   </tbody>
 </table>
 <app-create-team (teamCreated)="onTeamCreated()"></app-create-team>
+
+<div *ngFor="let membership of teamMemberships">
+  <app-list-team-games
+    [team]="findTeamById(membership.teamId)"
+  ></app-list-team-games>
+</div>
