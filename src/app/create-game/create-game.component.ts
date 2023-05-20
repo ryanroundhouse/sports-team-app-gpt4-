@@ -5,18 +5,17 @@ import { Team } from '../services/team.service';
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
-  styleUrls: ['./create-game.component.sass']
+  styleUrls: ['./create-game.component.sass'],
 })
 export class CreateGameComponent implements OnInit {
-
   private _team: Team | null = null;
 
   @Output() gameCreated = new EventEmitter<void>();
 
-  @Input() 
+  @Input()
   set team(value: Team | null) {
     this._team = value;
-    if(value){
+    if (value) {
       this.game.teamId = value.id;
     }
   }
@@ -24,7 +23,7 @@ export class CreateGameComponent implements OnInit {
   get team(): Team | null {
     return this._team;
   }
-  
+
   game: Game = {
     location: '',
     opposingTeam: '',
@@ -34,24 +33,18 @@ export class CreateGameComponent implements OnInit {
     id: 0,
   };
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   submitGame(): void {
-    
     const token = sessionStorage.getItem('token');
     if (token && this.game) {
-
-    this.gameService.createGame(this.game, token)
-      .subscribe(
-        response => {
-          console.log(response);
+      this.gameService.createGame(this.game, token).subscribe(
+        (response) => {
           this.gameCreated.emit();
         },
-        error => {
+        (error) => {
           console.error(error);
         }
       );

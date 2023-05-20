@@ -10,6 +10,7 @@ import { PlayerService } from '../services/player.service';
 export class LoginComponent {
   email = '';
   password = '';
+  id: number = 0;
   token: string | null = null;
   error: string | null = null;
 
@@ -28,6 +29,7 @@ export class LoginComponent {
         this.token = response.token;
         this.error = null;
         sessionStorage.setItem('token', this.token);
+        sessionStorage.setItem('id', this.id + '');
         this.router.navigate(['/dashboard']);
       },
       (error) => {

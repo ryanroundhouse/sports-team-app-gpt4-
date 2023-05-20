@@ -1,5 +1,5 @@
 <div class="list-team-games">
-  <h2>Team Games</h2>
+  <h2 *ngIf="team">{{ team.name }} Games</h2>
   <table>
     <thead>
       <tr>
@@ -17,7 +17,27 @@
         <td>{{ game.time | date : "yyyy-MM-ddTHH:mm:ss" }}</td>
         <td>{{ game.notes }}</td>
         <td>
-          <button (click)="deleteGame(game.id)">Delete</button>
+          <button
+            *ngIf="canConfirm"
+            (click)="handleConfirmAttendance(game.id)"
+            [style.backgroundColor]="
+              getAttendanceStatus(game.id) === 'confirm' ? 'green' : ''
+            "
+          >
+            Confirm
+          </button>
+          <button
+            *ngIf="canConfirm"
+            (click)="handleAbsentAttendance(game.id)"
+            [style.backgroundColor]="
+              getAttendanceStatus(game.id) === 'absent' ? 'red' : ''
+            "
+          >
+            Absent
+          </button>
+          <button *ngIf="canDelete" (click)="deleteGame(game.id)">
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>

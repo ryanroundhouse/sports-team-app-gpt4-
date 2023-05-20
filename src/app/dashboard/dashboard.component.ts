@@ -51,7 +51,6 @@ export class DashboardComponent implements OnInit {
       );
       forkJoin(requests).subscribe((responses) => {
         this.teamMemberships = ([] as TeamMembership[]).concat(...responses);
-        console.log(`${JSON.stringify(this.teamMemberships)}`);
       });
     }
   }
@@ -70,7 +69,6 @@ export class DashboardComponent implements OnInit {
   }
 
   findTeamById(teamId: number): Team | null {
-    console.log(`called for team ${teamId}`);
     return this.teams.find((team) => team.id === teamId) || null;
   }
 }

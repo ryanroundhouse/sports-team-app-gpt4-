@@ -24,8 +24,15 @@
   </tbody>
 </table>
 
-<app-list-team-games #listTeamGamesComponent [team]="team"></app-list-team-games>
-<app-create-game (gameCreated)="listTeamGamesComponent.refreshGames()" [team]="team"></app-create-game>
+<app-list-team-games
+  #listTeamGamesComponent
+  [canDelete]="true"
+  [team]="team"
+></app-list-team-games>
+<app-create-game
+  (gameCreated)="listTeamGamesComponent.refreshGames()"
+  [team]="team"
+></app-create-game>
 
 <h2>Add New Member</h2>
 <form

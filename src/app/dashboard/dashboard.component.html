@@ -20,6 +20,8 @@
 
 <div *ngFor="let membership of teamMemberships">
   <app-list-team-games
+    [canDelete]="false"
+    [canConfirm]="true"
     [team]="findTeamById(membership.teamId)"
   ></app-list-team-games>
 </div>
