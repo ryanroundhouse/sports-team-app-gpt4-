@@ -6,7 +6,9 @@ import {
   TeamMembership,
   TeamMembershipService,
 } from '../services/team-membership.service';
+import { map } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +23,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private teamService: TeamService,
     private router: Router,
-    private teamMembershipService: TeamMembershipService
+    private teamMembershipService: TeamMembershipService,
+    private playerService: PlayerService
   ) {}
 
   ngOnInit() {
@@ -34,10 +37,20 @@ export class DashboardComponent implements OnInit {
 
   getTeams(): void {
     if (this.token) {
-      this.teamService.getTeams(this.token).subscribe((teams) => {
-        this.teams = teams;
-        this.getTeamMemberships();
-      });
+      const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
+      this.playerService
+        .getTeamMembershipsByPlayer(this.token, playerId)
+        .subscribe((teamMemberships) => {
+          const teamIds = teamMemberships.map(
+            (membership) => membership.teamId
+          );
+          console.log(`memberships: ${teamMemberships}`);
+          if (this.token) {
+            this.teamService.getTeams(this.token).subscribe((teams) => {
+              this.teams = teams.filter((team) => teamIds.includes(team.id));
+            });
+          }
+        });
     }
   }
 

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TeamMembership } from './team-membership.service';
 
 export interface Player {
   id?: number;
@@ -30,8 +31,8 @@ export class PlayerService {
   login(
     email: string,
     password: string
-  ): Observable<{ player: Player; token: string }> {
-    return this.http.post<{ player: Player; token: string }>(
+  ): Observable<{ player: Player; token: string; id: string }> {
+    return this.http.post<{ player: Player; token: string; id: string }>(
       `${this.baseUrl}/login`,
       { email, password }
     );
@@ -45,6 +46,17 @@ export class PlayerService {
   getById(token: string, id: number): Observable<Player> {
     const headers = this.getAuthHeader(token);
     return this.http.get<Player>(`${this.baseUrl}/${id}`, { headers });
+  }
+
+  getTeamMembershipsByPlayer(
+    token: string,
+    playerId: number
+  ): Observable<TeamMembership[]> {
+    const headers = this.getAuthHeader(token);
+    return this.http.get<TeamMembership[]>(
+      `${this.baseUrl}/${playerId}/team-memberships`,
+      { headers }
+    );
   }
 
   update(

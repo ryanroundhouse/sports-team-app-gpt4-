@@ -26,10 +26,12 @@ export class LoginComponent {
   onSubmit() {
     this.playerService.login(this.email, this.password).subscribe(
       (response) => {
+        console.log(`login response: ${JSON.stringify(response)}`);
         this.token = response.token;
         this.error = null;
         sessionStorage.setItem('token', this.token);
-        sessionStorage.setItem('id', this.id + '');
+        sessionStorage.setItem('id', response.id);
+        console.log(`id on login is: ${sessionStorage.getItem('id')}`);
         this.router.navigate(['/dashboard']);
       },
       (error) => {
