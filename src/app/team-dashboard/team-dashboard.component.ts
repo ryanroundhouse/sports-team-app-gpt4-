@@ -18,6 +18,7 @@ export class TeamDashboardComponent implements OnInit {
   teamMemberships: TeamMembership[] = [];
   players: Player[] = [];
   token: string | null = null;
+  teamJoinUrl: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -37,8 +38,11 @@ export class TeamDashboardComponent implements OnInit {
 
   getTeam(token: string, id: number): void {
     this.token = sessionStorage.getItem('token');
-    if (token){
-      this.teamService.getTeamById(id, token).subscribe((team) => (this.team = team));
+    if (token) {
+      this.teamService.getTeamById(id, token).subscribe((team) => {
+        this.team = team;
+        this.teamJoinUrl = `${location.protocol}//${location.host}/join-team/${this.team.id}`;
+      });
     }
   }
 

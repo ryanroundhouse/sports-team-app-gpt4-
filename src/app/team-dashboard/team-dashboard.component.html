@@ -24,6 +24,17 @@
   </tbody>
 </table>
 
+<div class="join-url-container">
+  <label for="teamJoinUrl">Team Join URL:</label>
+  <input
+    id="teamJoinUrl"
+    type="text"
+    readonly
+    [value]="teamJoinUrl"
+    #teamJoinUrlInput
+  />
+</div>
+
 <app-list-team-games
   #listTeamGamesComponent
   [canDelete]="true"

@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TeamDashboardComponent } from './team-dashboard/team-dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
+import { TeamJoinComponent } from './team-join/team-join.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'team/:id', component: TeamDashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'join-team/:teamId', component: TeamJoinComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
