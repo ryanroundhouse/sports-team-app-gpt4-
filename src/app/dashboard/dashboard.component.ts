@@ -1,4 +1,3 @@
-// dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Team, TeamService } from '../services/team.service';
 import { Router } from '@angular/router';
@@ -6,8 +5,8 @@ import {
   TeamMembership,
   TeamMembershipService,
 } from '../services/team-membership.service';
-import { map } from 'rxjs/operators';
-import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { map, catchError, finalize } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
 import { PlayerService } from '../services/player.service';
 
 @Component({
@@ -40,15 +39,35 @@ export class DashboardComponent implements OnInit {
       const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
       this.playerService
         .getTeamMembershipsByPlayer(this.token, playerId)
+        .pipe(
+          catchError((error) => {
+            console.error(
+              'Error occurred while fetching team memberships: ',
+              error
+            );
+            return of([]);
+          })
+        )
         .subscribe((teamMemberships) => {
           const teamIds = teamMemberships.map(
             (membership) => membership.teamId
           );
           console.log(`memberships: ${teamMemberships}`);
           if (this.token) {
-            this.teamService.getTeams(this.token).subscribe((teams) => {
-              this.teams = teams.filter((team) => teamIds.includes(team.id));
-            });
+            this.teamService
+              .getTeams(this.token)
+              .pipe(
+                catchError((error) => {
+                  console.error('Error occurred while fetching teams: ', error);
+                  return of([]);
+                }),
+                finalize(() => {
+                  this.getTeamMemberships();
+                })
+              )
+              .subscribe((teams) => {
+                this.teams = teams.filter((team) => teamIds.includes(team.id));
+              });
           }
         });
     }
@@ -57,10 +76,17 @@ export class DashboardComponent implements OnInit {
   getTeamMemberships(): void {
     if (this.token) {
       const requests = this.teams.map((team) =>
-        this.teamMembershipService.getTeamMemberships(
-          this.token as string,
-          team.id
-        )
+        this.teamMembershipService
+          .getTeamMemberships(this.token as string, team.id)
+          .pipe(
+            catchError((error) => {
+              console.error(
+                `Error occurred while fetching team memberships for team ${team.id}: `,
+                error
+              );
+              return of([]);
+            })
+          )
       );
       forkJoin(requests).subscribe((responses) => {
         this.teamMemberships = ([] as TeamMembership[]).concat(...responses);
@@ -75,9 +101,17 @@ export class DashboardComponent implements OnInit {
   deleteTeam(id: number): void {
     const token = sessionStorage.getItem('token');
     if (token) {
-      this.teamService.deleteTeam(token, id).subscribe(() => {
-        this.teams = this.teams.filter((team) => team.id !== id);
-      });
+      this.teamService
+        .deleteTeam(token, id)
+        .pipe(
+          catchError((error) => {
+            console.error(`Error occurred while deleting team ${id}: `, error);
+            return of(null);
+          })
+        )
+        .subscribe(() => {
+          this.teams = this.teams.filter((team) => team.id !== id);
+        });
     }
   }
 
