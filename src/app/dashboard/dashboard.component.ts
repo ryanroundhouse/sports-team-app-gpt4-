@@ -75,9 +75,10 @@ export class DashboardComponent implements OnInit {
 
   getTeamMemberships(): void {
     if (this.token) {
+      const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
       const requests = this.teams.map((team) =>
-        this.teamMembershipService
-          .getTeamMemberships(this.token as string, team.id)
+        this.playerService
+          .getTeamMembershipsByPlayer(this.token as string, playerId)
           .pipe(
             catchError((error) => {
               console.error(
@@ -89,6 +90,11 @@ export class DashboardComponent implements OnInit {
           )
       );
       forkJoin(requests).subscribe((responses) => {
+        console.log(
+          `membership was: ${JSON.stringify(
+            this.teamMemberships
+          )} response is: ${JSON.stringify(responses)}`
+        );
         this.teamMemberships = ([] as TeamMembership[]).concat(...responses);
       });
     }
