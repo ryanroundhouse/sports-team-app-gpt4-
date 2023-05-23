@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Team, TeamService } from '../services/team.service';
 import { Router } from '@angular/router';
-import {
-  TeamMembership,
-  TeamMembershipService,
-} from '../services/team-membership.service';
+import { TeamMembership } from '../services/team-membership.service';
 import { map, catchError, finalize } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import { PlayerService } from '../services/player.service';
@@ -22,7 +19,6 @@ export class DashboardComponent implements OnInit {
   constructor(
     private teamService: TeamService,
     private router: Router,
-    private teamMembershipService: TeamMembershipService,
     private playerService: PlayerService
   ) {}
 

@@ -30,7 +30,12 @@ export class LoginComponent {
         this.error = null;
         sessionStorage.setItem('token', this.token);
         sessionStorage.setItem('id', response.id);
-        this.router.navigate(['/dashboard']);
+        const joinTeamId = sessionStorage.getItem('join-team');
+        if (joinTeamId) {
+          this.router.navigate([`/join-team/${joinTeamId}`]);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       (error) => {
         this.error = error.message;

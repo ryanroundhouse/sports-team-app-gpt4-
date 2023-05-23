@@ -22,6 +22,9 @@ export class TeamJoinComponent implements OnInit {
 
   ngOnInit() {
     this.teamId = this.route.snapshot.paramMap.get('teamId');
+    if (this.teamId) {
+      sessionStorage.setItem('join-team', this.teamId);
+    }
     const token = sessionStorage.getItem('token');
 
     if (token) {
@@ -32,9 +35,8 @@ export class TeamJoinComponent implements OnInit {
   }
 
   joinTeam() {
-    // Assume the logged-in user's ID is stored in a service or sessionStorage
     const playerId = parseInt(sessionStorage.getItem('id') ?? '-1');
-    const isCaptain = false; // Assume the user is not a captain
+    const isCaptain = false;
     const token = sessionStorage.getItem('token');
 
     if (token && playerId && this.teamId) {
@@ -43,17 +45,15 @@ export class TeamJoinComponent implements OnInit {
         .subscribe(
           (membership: TeamMembership) => {
             console.log('Team joined successfully!', membership);
-            // Navigate to the team's dashboard
+            sessionStorage.removeItem('join-team');
             this.router.navigate([`/team/${this.teamId}`]);
           },
           (error) => {
             console.error('An error occurred while joining the team:', error);
-            // Handle the error (e.g., show an error message to the user)
           }
         );
     } else {
       console.error('No auth token found!');
-      // Handle the error (e.g., redirect to the login page)
       this.router.navigate(['/login']);
     }
   }
