@@ -38,6 +38,7 @@
           <button *ngIf="canDelete" (click)="deleteGame(game.id)">
             Delete
           </button>
+          <a [routerLink]="['/game', game.id]">Details</a>
         </td>
       </tr>
     </tbody>

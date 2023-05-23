@@ -1,0 +1,15 @@
+<!-- game-dashboard.component.html -->
+<div *ngIf="game">
+  <h2>Game Details</h2>
+  <p>Opposing Team: {{ game.opposingTeam }}</p>
+  <p>Location: {{ game.location }}</p>
+  <p>Time: {{ game.time }}</p>
+  <p>Notes: {{ game.notes }}</p>
+  <h3>Game Attendance</h3>
+  <ul>
+    <li *ngFor="let attend of attendance">
+      Player Name: {{ getPlayerName(attend.playerId) }}, Status:
+      {{ attend.status }}
+    </li>
+  </ul>
+</div>

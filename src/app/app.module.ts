@@ -16,6 +16,7 @@ import { CreateGameComponent } from './create-game/create-game.component';
 import { ListTeamGamesComponent } from './list-team-games/list-team-games.component';
 import { LogoutComponent } from './logout/logout.component';
 import { TeamJoinComponent } from './team-join/team-join.component';
+import { GameDashboardComponent } from './game-dashboard/game-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TeamJoinComponent } from './team-join/team-join.component';
     ListTeamGamesComponent,
     LogoutComponent,
     TeamJoinComponent,
+    GameDashboardComponent,
   ],
   imports: [
     BrowserModule,
