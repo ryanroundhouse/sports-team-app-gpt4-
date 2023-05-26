@@ -117,6 +117,13 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  isCaptain(teamId: number): boolean {
+    const membership = this.teamMemberships.find(
+      (membership) => membership.teamId === teamId
+    );
+    return membership ? membership.isCaptain : false;
+  }
+
   findTeamById(teamId: number): Team | null {
     return this.teams.find((team) => team.id === teamId) || null;
   }

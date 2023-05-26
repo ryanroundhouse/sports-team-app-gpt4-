@@ -102,4 +102,13 @@ export class TeamDashboardComponent implements OnInit {
         });
     }
   }
+
+  isCaptain(): boolean {
+    const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
+    const membership = this.teamMemberships.find(
+      (membership) =>
+        membership.teamId === this.team?.id && membership.playerId === playerId
+    );
+    return membership ? membership.isCaptain : false;
+  }
 }

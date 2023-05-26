@@ -7,6 +7,10 @@ import {
   Attendance,
   GameAttendanceService,
 } from '../services/game-attendance.service';
+import {
+  TeamMembership,
+  TeamMembershipService,
+} from '../services/team-membership.service';
 
 @Component({
   selector: 'app-game-dashboard',
@@ -16,12 +20,14 @@ import {
 export class GameDashboardComponent implements OnInit {
   game: Game | null = null;
   attendance: Attendance[] = [];
+  teamMembership: TeamMembership | null = null;
   players: Player[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private teamMembershipService: TeamMembershipService
   ) {}
 
   ngOnInit(): void {
@@ -34,10 +40,37 @@ export class GameDashboardComponent implements OnInit {
   getGame(id: number): void {
     const token = sessionStorage.getItem('token');
     if (token) {
-      this.gameService
-        .getGameById(id, token)
-        .subscribe((game) => (this.game = game));
+      this.gameService.getGameById(id, token).subscribe((game) => {
+        this.game = game;
+        this.getTeamMembership();
+      });
     }
+  }
+
+  getTeamMembership(): void {
+    const token = sessionStorage.getItem('token');
+    const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
+    const teamId = this.game?.teamId;
+
+    if (teamId && token) {
+      this.teamMembershipService
+        .getTeamMemberships(token, teamId)
+        .subscribe((teamMemberships) => {
+          const teamMembership = teamMemberships.find(
+            (membership) => membership.playerId === playerId
+          );
+          if (teamMembership) {
+            this.teamMembership = teamMembership;
+          }
+        });
+    }
+  }
+
+  isCaptain(): boolean {
+    if (this.teamMembership) {
+      return this.teamMembership.isCaptain;
+    }
+    return false;
   }
 
   getGameAttendances(id: number): void {

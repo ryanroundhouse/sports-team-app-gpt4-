@@ -11,7 +11,9 @@
       <td>{{ team.name }}</td>
       <td>
         <a [routerLink]="['/team', team.id]">View Team</a>
-        <button (click)="deleteTeam(team.id)">Delete Team</button>
+        <button *ngIf="isCaptain(team.id)" (click)="deleteTeam(team.id)">
+          Delete Team
+        </button>
       </td>
     </tr>
   </tbody>
