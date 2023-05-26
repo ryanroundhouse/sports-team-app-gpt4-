@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Team, TeamService } from '../services/team.service';
 import { Router } from '@angular/router';
-import { TeamMembership } from '../services/team-membership.service';
-import { map, catchError, finalize } from 'rxjs/operators';
+import {
+  TeamMembership,
+  TeamMembershipService,
+} from '../services/team-membership.service';
+import { catchError, finalize } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import { PlayerService } from '../services/player.service';
 
@@ -19,7 +22,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private teamService: TeamService,
     private router: Router,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private teamMembershipService: TeamMembershipService
   ) {}
 
   ngOnInit() {
@@ -27,10 +31,10 @@ export class DashboardComponent implements OnInit {
     if (!this.token) {
       this.router.navigate(['/login']);
     }
-    this.getTeams();
+    this.getPlayerTeamMemberships();
   }
 
-  getTeams(): void {
+  getPlayerTeamMemberships(): void {
     if (this.token) {
       const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
       this.playerService
@@ -45,75 +49,56 @@ export class DashboardComponent implements OnInit {
           })
         )
         .subscribe((teamMemberships) => {
-          const teamIds = teamMemberships.map(
-            (membership) => membership.teamId
-          );
-          console.log(`memberships: ${teamMemberships}`);
-          if (this.token) {
-            this.teamService
-              .getTeams(this.token)
-              .pipe(
-                catchError((error) => {
-                  console.error('Error occurred while fetching teams: ', error);
-                  return of([]);
-                }),
-                finalize(() => {
-                  this.getTeamMemberships();
-                })
-              )
-              .subscribe((teams) => {
-                this.teams = teams.filter((team) => teamIds.includes(team.id));
-              });
-          }
+          this.teamMemberships = teamMemberships;
+          this.getTeams();
         });
     }
   }
 
-  getTeamMemberships(): void {
+  getTeams(): void {
     if (this.token) {
-      const playerId = parseInt(sessionStorage.getItem('id') || '', 10);
-      const requests = this.teams.map((team) =>
-        this.playerService
-          .getTeamMembershipsByPlayer(this.token as string, playerId)
-          .pipe(
-            catchError((error) => {
-              console.error(
-                `Error occurred while fetching team memberships for team ${team.id}: `,
-                error
-              );
-              return of([]);
-            })
-          )
+      const teamIds = this.teamMemberships.map(
+        (membership) => membership.teamId
       );
-      forkJoin(requests).subscribe((responses) => {
-        console.log(
-          `membership was: ${JSON.stringify(
-            this.teamMemberships
-          )} response is: ${JSON.stringify(responses)}`
-        );
-        this.teamMemberships = ([] as TeamMembership[]).concat(...responses);
-      });
+      this.teamService
+        .getTeams(this.token)
+        .pipe(
+          catchError((error) => {
+            console.error('Error occurred while fetching teams: ', error);
+            return of([]);
+          })
+        )
+        .subscribe((teams) => {
+          this.teams = teams.filter((team) => teamIds.includes(team.id));
+        });
     }
   }
 
   onTeamCreated(): void {
-    this.getTeams();
+    this.getPlayerTeamMemberships();
   }
 
   deleteTeam(id: number): void {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      this.teamService
-        .deleteTeam(token, id)
-        .pipe(
-          catchError((error) => {
-            console.error(`Error occurred while deleting team ${id}: `, error);
-            return of(null);
-          })
-        )
-        .subscribe(() => {
-          this.teams = this.teams.filter((team) => team.id !== id);
-        });
+    const confirmDelete = confirm('Are you sure you want to delete this team?');
+    if (confirmDelete) {
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        this.teamService
+          .deleteTeam(token, id)
+          .pipe(
+            catchError((error) => {
+              console.error(
+                `Error occurred while deleting team ${id}: `,
+                error
+              );
+              return of(null);
+            })
+          )
+          .subscribe(() => {
+            this.teams = this.teams.filter((team) => team.id !== id);
+            this.getPlayerTeamMemberships(); // Refresh memberships
+          });
+      }
     }
   }
 

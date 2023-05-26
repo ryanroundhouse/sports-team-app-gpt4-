@@ -127,11 +127,14 @@ export class ListTeamGamesComponent implements OnInit {
   }
 
   deleteGame(gameId: number): void {
-    const accessToken = sessionStorage.getItem('token');
-    if (accessToken) {
-      this.gameService.deleteGame(gameId, accessToken).subscribe(() => {
-        this.games = this.games.filter((game) => game.id !== gameId);
-      });
+    const confirmDelete = confirm('Are you sure you want to delete this game?');
+    if (confirmDelete) {
+      const accessToken = sessionStorage.getItem('token');
+      if (accessToken) {
+        this.gameService.deleteGame(gameId, accessToken).subscribe(() => {
+          this.games = this.games.filter((game) => game.id !== gameId);
+        });
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 // create-team.component.ts
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TeamService } from '../services/team.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-team',
@@ -12,7 +13,7 @@ export class CreateTeamComponent {
 
   @Output() teamCreated = new EventEmitter();
 
-  constructor(private teamService: TeamService) {}
+  constructor(private teamService: TeamService, private router: Router) {}
 
   createTeam(): void {
     const token = sessionStorage.getItem('token');
@@ -21,6 +22,7 @@ export class CreateTeamComponent {
         () => {
           this.teamName = '';
           this.teamCreated.emit();
+          this.router.navigate(['/dashboard']);
         },
         (error) => {
           // handle error here, maybe display a user-friendly message
