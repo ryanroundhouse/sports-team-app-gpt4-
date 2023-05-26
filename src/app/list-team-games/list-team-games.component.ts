@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-list-team-games',
   templateUrl: './list-team-games.component.html',
-  styleUrls: ['./list-team-games.component.sass'],
+  styleUrls: ['./list-team-games.component.scss'],
 })
 export class ListTeamGamesComponent implements OnInit {
   private _team: Team | null = null;

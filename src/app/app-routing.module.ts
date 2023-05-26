@@ -7,6 +7,7 @@ import { TeamDashboardComponent } from './team-dashboard/team-dashboard.componen
 import { LogoutComponent } from './logout/logout.component';
 import { TeamJoinComponent } from './team-join/team-join.component';
 import { GameDashboardComponent } from './game-dashboard/game-dashboard.component';
+import { CreateTeamComponent } from './create-team/create-team.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'join-team/:teamId', component: TeamJoinComponent },
   { path: 'game/:id', component: GameDashboardComponent },
+  { path: 'create-team', component: CreateTeamComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-team-join',
   templateUrl: './team-join.component.html',
-  styleUrls: ['./team-join.component.sass'],
+  styleUrls: ['./team-join.component.scss'],
 })
 export class TeamJoinComponent implements OnInit {
   teamId: string | null = null;

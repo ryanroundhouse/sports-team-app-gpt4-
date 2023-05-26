@@ -1,46 +1,54 @@
-<div class="list-team-games">
-  <h2 *ngIf="team">{{ team.name }} Games</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Location</th>
-        <th>Opposing Team</th>
-        <th>Time</th>
-        <th>Notes</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let game of games">
-        <td>{{ game.location }}</td>
-        <td>{{ game.opposingTeam }}</td>
-        <td>{{ game.time | date : "yyyy-MM-ddTHH:mm:ss" }}</td>
-        <td>{{ game.notes }}</td>
-        <td>
-          <button
-            *ngIf="canConfirm"
-            (click)="handleConfirmAttendance(game.id)"
-            [style.backgroundColor]="
-              getAttendanceStatus(game.id) === 'confirm' ? 'green' : ''
-            "
-          >
-            Confirm
-          </button>
-          <button
-            *ngIf="canConfirm"
-            (click)="handleAbsentAttendance(game.id)"
-            [style.backgroundColor]="
-              getAttendanceStatus(game.id) === 'absent' ? 'red' : ''
-            "
-          >
-            Absent
-          </button>
-          <button *ngIf="canDelete" (click)="deleteGame(game.id)">
-            Delete
-          </button>
-          <a [routerLink]="['/game', game.id]">Details</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="list-team-games ios-style">
+  <h2 class="header" *ngIf="team">{{ team.name }} Games</h2>
+  <div class="table-container">
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th>Location</th>
+          <th>Opposing Team</th>
+          <th>Time</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of games">
+          <td>{{ game.location }}</td>
+          <td>{{ game.opposingTeam }}</td>
+          <td>{{ game.time | date : "yyyy-MM-ddTHH:mm:ss" }}</td>
+          <td>{{ game.notes }}</td>
+          <td class="actions">
+            <button
+              class="confirm-button"
+              *ngIf="canConfirm"
+              (click)="handleConfirmAttendance(game.id)"
+              [style.backgroundColor]="
+                getAttendanceStatus(game.id) === 'confirm' ? 'green' : ''
+              "
+            >
+              Confirm
+            </button>
+            <button
+              class="absent-button"
+              *ngIf="canConfirm"
+              (click)="handleAbsentAttendance(game.id)"
+              [style.backgroundColor]="
+                getAttendanceStatus(game.id) === 'absent' ? 'red' : ''
+              "
+            >
+              Absent
+            </button>
+            <button
+              class="delete-button"
+              *ngIf="canDelete"
+              (click)="deleteGame(game.id)"
+            >
+              Delete
+            </button>
+            <a class="view-link" [routerLink]="['/game', game.id]">Details</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -5,14 +5,14 @@ import {
   TeamMembership,
   TeamMembershipService,
 } from '../services/team-membership.service';
-import { catchError, finalize } from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.sass'],
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   teams: Team[] = [];

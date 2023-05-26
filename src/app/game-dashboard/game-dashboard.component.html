@@ -1,24 +1,25 @@
-<!-- game-dashboard.component.html -->
-<div *ngIf="game">
-  <h2>Game Details</h2>
+<div class="ios-style" *ngIf="game">
+  <h2 class="header">Game Details</h2>
   <p>Opposing Team: {{ game.opposingTeam }}</p>
   <p>Location: {{ game.location }}</p>
   <p>Time: {{ game.time | date : "yyyy-MM-dd @ HH:mm:ss" }}</p>
   <p>Notes: {{ game.notes }}</p>
-  <h3>Game Attendance</h3>
+  <h3 class="sub-header">Game Attendance</h3>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let attend of attendance">
-        <td>{{ getPlayerName(attend.playerId) }}</td>
-        <td>{{ attend.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attend of attendance">
+          <td>{{ getPlayerName(attend.playerId) }}</td>
+          <td>{{ attend.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

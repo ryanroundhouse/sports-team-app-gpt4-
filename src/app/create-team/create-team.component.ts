@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-team',
   templateUrl: './create-team.component.html',
-  styleUrls: ['./create-team.component.sass'],
+  styleUrls: ['./create-team.component.scss'],
 })
 export class CreateTeamComponent {
   teamName: string = '';

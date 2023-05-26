@@ -1,45 +1,48 @@
-<!-- team-dashboard.component.html -->
-<h1>{{ team?.name }}</h1>
+<div class="ios-style">
+  <h1 class="header">{{ team?.name }}</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th *ngIf="isCaptain()">Email</th>
-      <th *ngIf="isCaptain()">Cellphone</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let player of players">
-      <td>{{ player.name }}</td>
-      <td *ngIf="isCaptain()">{{ player.email }}</td>
-      <td *ngIf="isCaptain()">{{ player.cellphone }}</td>
-      <td>
-        <!-- Update action buttons based on your requirements -->
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div class="table-container">
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th *ngIf="isCaptain()">Email</th>
+          <th *ngIf="isCaptain()">Cellphone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players">
+          <td>{{ player.name }}</td>
+          <td *ngIf="isCaptain()">{{ player.email }}</td>
+          <td *ngIf="isCaptain()">{{ player.cellphone }}</td>
+          <td>
+            <!-- Update action buttons based on your requirements -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<div *ngIf="isCaptain()" class="join-url-container">
-  <label for="teamJoinUrl">Team Join URL:</label>
-  <input
-    id="teamJoinUrl"
-    type="text"
-    readonly
-    [value]="teamJoinUrl"
-    #teamJoinUrlInput
-  />
+  <div *ngIf="isCaptain()" class="join-url-container">
+    <label for="teamJoinUrl">Team Join URL:</label>
+    <input
+      id="teamJoinUrl"
+      type="text"
+      readonly
+      [value]="teamJoinUrl"
+      #teamJoinUrlInput
+    />
+  </div>
+
+  <app-list-team-games
+    #listTeamGamesComponent
+    [canDelete]="isCaptain()"
+    [team]="team"
+  ></app-list-team-games>
+  <app-create-game
+    *ngIf="isCaptain()"
+    (gameCreated)="listTeamGamesComponent.refreshGames()"
+    [team]="team"
+  ></app-create-game>
 </div>
-
-<app-list-team-games
-  #listTeamGamesComponent
-  [canDelete]="isCaptain()"
-  [team]="team"
-></app-list-team-games>
-<app-create-game
-  *ngIf="isCaptain()"
-  (gameCreated)="listTeamGamesComponent.refreshGames()"
-  [team]="team"
-></app-create-game>

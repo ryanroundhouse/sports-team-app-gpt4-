@@ -1,7 +1,8 @@
-<!-- create-team.component.html -->
-<h2>Create a New Team</h2>
-<div>
-  <label for="teamName">Team Name:</label>
-  <input id="teamName" [(ngModel)]="teamName" placeholder="Enter team name" />
-  <button (click)="createTeam()">Create Team</button>
+<div class="ios-style">
+  <h2 class="header">Create a New Team</h2>
+  <div class="form-group">
+    <label for="teamName">Team Name:</label>
+    <input id="teamName" [(ngModel)]="teamName" placeholder="Enter team name" />
+    <button class="submit-button" (click)="createTeam()">Create Team</button>
+  </div>
 </div>

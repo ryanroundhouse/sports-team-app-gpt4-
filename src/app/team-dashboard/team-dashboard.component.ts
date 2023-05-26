@@ -11,7 +11,7 @@ import { Team, TeamService } from '../services/team.service';
 @Component({
   selector: 'app-team-dashboard',
   templateUrl: './team-dashboard.component.html',
-  styleUrls: ['./team-dashboard.component.sass'],
+  styleUrls: ['./team-dashboard.component.scss'],
 })
 export class TeamDashboardComponent implements OnInit {
   team: Team | null = null;

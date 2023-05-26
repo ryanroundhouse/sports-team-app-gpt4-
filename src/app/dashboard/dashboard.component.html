@@ -1,29 +1,36 @@
-<h2>Team Management</h2>
-<table *ngIf="teams.length > 0">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let team of teams">
-      <td>{{ team.name }}</td>
-      <td>
-        <a [routerLink]="['/team', team.id]">View Team</a>
-        <button *ngIf="isCaptain(team.id)" (click)="deleteTeam(team.id)">
-          Delete Team
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<app-create-team (teamCreated)="onTeamCreated()"></app-create-team>
+<div class="ios-style">
+  <div class="team-games" *ngFor="let membership of teamMemberships">
+    <app-list-team-games
+      [canDelete]="false"
+      [canConfirm]="true"
+      [team]="findTeamById(membership.teamId)"
+    ></app-list-team-games>
+  </div>
 
-<div *ngFor="let membership of teamMemberships">
-  <app-list-team-games
-    [canDelete]="false"
-    [canConfirm]="true"
-    [team]="findTeamById(membership.teamId)"
-  ></app-list-team-games>
+  <h2 class="header">Team Management</h2>
+  <div class="table-container" *ngIf="teams.length > 0">
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of teams">
+          <td>{{ team.name }}</td>
+          <td class="actions">
+            <a class="view-link" [routerLink]="['/team', team.id]">View Team</a>
+            <button
+              class="delete-button"
+              *ngIf="isCaptain(team.id)"
+              (click)="deleteTeam(team.id)"
+            >
+              Delete Team
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

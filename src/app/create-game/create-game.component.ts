@@ -5,7 +5,7 @@ import { Team } from '../services/team.service';
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
-  styleUrls: ['./create-game.component.sass'],
+  styleUrls: ['./create-game.component.scss'],
 })
 export class CreateGameComponent implements OnInit {
   private _team: Team | null = null;

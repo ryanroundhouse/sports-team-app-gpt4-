@@ -4,6 +4,7 @@ import { Player, PlayerService } from '../services/player.service';
 @Component({
   selector: 'app-list-players',
   templateUrl: './list-players.component.html',
+  styleUrls: ['./list-players.component.scss'],
 })
 export class ListPlayersComponent {
   players: Player[] = [];
